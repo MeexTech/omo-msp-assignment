@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package omo.msp.assignment;
+option go_package= "proto/assignment";
+import "proto/assignment/common.proto";
+
+service AgentService {
+  rpc AddOne(ReqAgentAdd) returns (ReplyAgentOne) {}
+  rpc GetOne(RequestInfo) returns (ReplyAgentOne) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetListByFilter(RequestFilter) returns (ReplyAgentList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateBase(ReqAgentUpdate) returns (ReplyInfo) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+}
+
+message AgentInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+  string name = 7;
+  string remark = 8;
+  string user = 9;
+  string entity = 10;
+  repeated string tags = 11;
+}
+
+message ReqAgentAdd {
+  string name = 1;
+  string scene = 2;
+  string cover = 3;
+  string remark = 5;
+  string location = 6;
+  string contact = 8;
+  string operator = 9;
+  AddressInfo address = 10;
+}
+
+message ReqAgentUpdate{
+  string uid = 1;
+  string name = 2;
+  string cover = 3;
+  string remark = 4;
+  string operator = 5;
+}
+
+message ReplyAgentOne{
+  AgentInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReplyAgentList{
+  uint32 total = 1;
+  uint32 pageMax = 2;
+  uint32 pageNow = 3;
+  repeated AgentInfo list = 4;
+  ReplyStatus status = 5;
+}

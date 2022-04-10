@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+package omo.msp.assignment;
+option go_package= "proto/assignment";
+
+enum ResultStatus {
+  Success = 0;
+  MaxLimit = 1;
+  Repeated = 2;
+  NotExisted = 3;
+  DBException = 4;
+  Empty = 5;
+}
+
+message AddressInfo {
+  string country = 1;
+  string province = 2;
+  string city = 3;
+  string zone = 4;
+  string location = 5;
+}
+
+message RequestInfo {
+  string owner = 1;
+  string uid = 2;
+  string operator = 3;
+}
+
+message RequestFilter {
+  string owner = 1;
+  string key = 2;
+  string value = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated string values = 6;
+}
+
+message RequestUpdate{
+  string owner = 1;
+  string uid = 2;
+  string key = 3;
+  string value = 4;
+  string operator = 5;
+  repeated string values = 6;
+}
+
+message ReplyStatus {
+  uint32 code = 1;
+  string error = 2;
+}
+
+message ReplyInfo {
+  string uid = 1;
+  ReplyStatus status = 2;
+}
+
+message DateInfo{
+  string begin = 1;
+  string end = 2;
+}
+
+message RequestAddress{
+  string uid = 1;
+  string country = 2;
+  string province = 3;
+  string city = 4;
+  string zone = 5;
+  string location = 6;
+  string operator = 7;
+}
+
+message RequestFlag{
+  string uid = 1;
+  string flag = 2;
+  string operator = 3;
+}
+
+message RequestIntFlag{
+  string uid = 1;
+  int32 flag = 2;
+  string operator = 3;
+}
+
+message RequestList{
+  string uid = 1;
+  string operator = 2;
+  repeated string  list = 3;
+}
+
+message ReplyList {
+  string uid = 1;
+  repeated string list = 2;
+  ReplyStatus status = 3;
+}
+
+message ReplyStatistic {
+  ReplyStatus status = 1;
+  string key = 2;
+  string owner = 3;
+  uint32 count = 4;
+}

@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package omo.msp.assignment;
+option go_package= "proto/assignment";
+import "proto/assignment/common.proto";
+
+service TaskService {
+  rpc AddOne(ReqTaskAdd) returns (ReplyTaskOne) {}
+  rpc GetOne(RequestInfo) returns (ReplyTaskOne) {}
+  rpc GetOneByFilter(RequestInfo) returns (ReplyTaskOne) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetListByFilter(RequestFilter) returns (ReplyTaskList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc UpdateBase(ReqTaskUpdate) returns (ReplyInfo) {}
+  rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
+  rpc UpdateAgent(RequestFlag) returns (ReplyInfo) {}
+  rpc AppendRecord(RequestInfo) returns (ReplyList) {}
+  rpc SubtractRecord(RequestInfo) returns (ReplyList) {}
+}
+
+message RecordInfo{
+  string uid = 1;
+  int64 created = 2;
+  int64 updated = 3;
+  string creator = 4;
+  string operator = 5;
+  string name = 6;
+  uint32 status = 7;
+  string remark = 8;
+  string agent = 9;
+  repeated string tags = 10;
+  repeated string assets = 11;
+}
+
+message TaskInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+  string client = 7; //委托人
+  string name = 8;
+  string remark = 9;
+  uint32 type = 10;
+  uint32 status = 11;
+  string agent = 12; //代理人
+  string owner = 13; //所属场景
+  string pretask = 14; //前置任务
+  DateInfo duration = 15; //时间
+  repeated string tags = 16;
+  repeated string assets = 21;
+  repeated RecordInfo records = 22;
+}
+
+message ReqTaskAdd{
+  string name = 1;
+  int32 type = 2;
+  string remark = 5;
+  string owner = 6;
+  string client = 7;
+  string pretask = 8;
+  DateInfo duration = 9;
+  string operator = 8;
+  string short = 9;
+  repeated string assets = 10;
+}
+
+message ReplyTaskOne{
+  TaskInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReplyTaskList{
+  uint32 total = 1;
+  uint32 pageMax = 2;
+  uint32 pageNow = 3;
+  repeated TaskInfo list = 4;
+  ReplyStatus status = 5;
+}
+
+message ReqTaskUpdate{
+  string uid = 1;
+  string name = 2;
+  string remark = 3;
+  string operator = 4;
+}
+
