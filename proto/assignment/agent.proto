@@ -12,6 +12,7 @@ service AgentService {
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateBase(ReqAgentUpdate) returns (ReplyInfo) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
 }
 
 message AgentInfo {
@@ -25,26 +26,30 @@ message AgentInfo {
   string remark = 8;
   string user = 9;
   string entity = 10;
-  repeated string tags = 11;
+  string owner = 11; //注册地或者所属地
+  string way = 12;
+  uint32 status = 13;
+  uint32 type = 14;
+  repeated string regions = 15; //服务地区
+  repeated string tags = 16;
 }
 
 message ReqAgentAdd {
   string name = 1;
-  string scene = 2;
-  string cover = 3;
+  string owner = 2;
+  string user = 3;
   string remark = 5;
   string location = 6;
-  string contact = 8;
+  string entity = 8;
   string operator = 9;
-  AddressInfo address = 10;
+  string way = 10;
 }
 
 message ReqAgentUpdate{
   string uid = 1;
   string name = 2;
-  string cover = 3;
-  string remark = 4;
-  string operator = 5;
+  string remark = 3;
+  string operator = 4;
 }
 
 message ReplyAgentOne{

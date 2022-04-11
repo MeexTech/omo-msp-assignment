@@ -42,6 +42,7 @@ type TeamService interface {
 	GetListByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyTeamList, error)
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateStatus(ctx context.Context, in *RequestIntFlag, opts ...client.CallOption) (*ReplyInfo, error)
 	AppendMember(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error)
 	SubtractMember(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error)
 }
@@ -138,6 +139,16 @@ func (c *teamService) UpdateByFilter(ctx context.Context, in *RequestUpdate, opt
 	return out, nil
 }
 
+func (c *teamService) UpdateStatus(ctx context.Context, in *RequestIntFlag, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "TeamService.UpdateStatus", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *teamService) AppendMember(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error) {
 	req := c.c.NewRequest(c.name, "TeamService.AppendMember", in)
 	out := new(ReplyList)
@@ -169,6 +180,7 @@ type TeamServiceHandler interface {
 	GetListByFilter(context.Context, *RequestFilter, *ReplyTeamList) error
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
+	UpdateStatus(context.Context, *RequestIntFlag, *ReplyInfo) error
 	AppendMember(context.Context, *RequestInfo, *ReplyList) error
 	SubtractMember(context.Context, *RequestInfo, *ReplyList) error
 }
@@ -183,6 +195,7 @@ func RegisterTeamServiceHandler(s server.Server, hdlr TeamServiceHandler, opts .
 		GetListByFilter(ctx context.Context, in *RequestFilter, out *ReplyTeamList) error
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
+		UpdateStatus(ctx context.Context, in *RequestIntFlag, out *ReplyInfo) error
 		AppendMember(ctx context.Context, in *RequestInfo, out *ReplyList) error
 		SubtractMember(ctx context.Context, in *RequestInfo, out *ReplyList) error
 	}
@@ -227,6 +240,10 @@ func (h *teamServiceHandler) GetStatistic(ctx context.Context, in *RequestFilter
 
 func (h *teamServiceHandler) UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error {
 	return h.TeamServiceHandler.UpdateByFilter(ctx, in, out)
+}
+
+func (h *teamServiceHandler) UpdateStatus(ctx context.Context, in *RequestIntFlag, out *ReplyInfo) error {
+	return h.TeamServiceHandler.UpdateStatus(ctx, in, out)
 }
 
 func (h *teamServiceHandler) AppendMember(ctx context.Context, in *RequestInfo, out *ReplyList) error {

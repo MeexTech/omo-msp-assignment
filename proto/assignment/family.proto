@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package omo.msp.assignment;
+option go_package= "proto/assignment";
+import "proto/assignment/common.proto";
+
+service FamilyService {
+  rpc AddOne(ReqFamilyAdd) returns (ReplyFamilyInfo) {}
+  rpc UpdateBase(ReqFamilyUpdate) returns (ReplyInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyFamilyInfo) {}
+  rpc GetOneByFilter(RequestInfo) returns (ReplyFamilyInfo) {}
+  rpc GetListByFilter(RequestFilter) returns (ReplyFamilyList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
+  rpc AppendMember(RequestInfo) returns (ReplyList) {}
+  rpc SubtractMember(RequestInfo) returns (ReplyList) {}
+}
+
+message FamilyInfo {
+  string uid = 1;
+  uint64 id = 2;
+  string name = 3;
+  int64 created = 4;
+  int64 updated = 5;
+  string creator = 6;
+  string operator = 7;
+  string sn = 8;
+  string remark = 9;
+  string address = 10; //详细地址
+  string cover = 11;
+  string region = 12;
+  uint32 status = 13;
+  string location = 14;
+  string passwords = 15;
+  string master = 16;//正的
+  repeated string assistants = 26;//副的
+  repeated string children = 27;
+  repeated string tags = 28;
+  repeated string agents = 29; //帮扶志愿者
+  repeated IdentifyInfo members = 30;
+}
+
+message IdentifyInfo{
+  string user = 1;
+  string remark = 2;
+}
+
+message ReqFamilyAdd {
+  string sn = 1;
+  string name = 2;
+  string remark = 3;
+  string operator = 4;
+  string passwords = 5;
+  string location = 6;
+  string address = 7;
+  string region = 8;
+  string cover = 9;
+}
+
+message ReqFamilyUpdate{
+  string uid = 1;
+  string name = 2;
+  string remark = 3;
+  string operator = 4;
+}
+
+message ReplyFamilyInfo{
+  ReplyStatus status = 1;
+  FamilyInfo info = 2;
+}
+
+message ReplyFamilyList{
+  ReplyStatus status = 1;
+  repeated FamilyInfo list = 2;
+}

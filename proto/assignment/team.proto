@@ -13,6 +13,7 @@ service TeamService {
   rpc GetListByFilter(RequestFilter) returns (ReplyTeamList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
   rpc AppendMember(RequestInfo) returns (ReplyList) {}
   rpc SubtractMember(RequestInfo) returns (ReplyList) {}
 }
@@ -27,10 +28,12 @@ message TeamInfo {
   string operator = 7;
   string owner = 8;
   string remark = 9;
-  string master = 10;//正
-  repeated string assistants = 11;//副
-  repeated string tags = 12;
-  repeated string members = 13;
+  string master = 10;//正的
+  string region = 11;
+  uint32 status = 12;
+  repeated string assistants = 13;//副的
+  repeated string tags = 14;
+  repeated string members = 15;
 }
 
 message ReqTeamAdd {
@@ -45,14 +48,6 @@ message ReqTeamUpdate{
   string name = 2;
   string remark = 3;
   string operator = 4;
-}
-
-message ReqTeamDevice {
-  string uid = 1;
-  string operator = 2;
-  string device = 3;
-  uint32 type = 4;
-  string remark = 5;
 }
 
 message ReplyTeamInfo{

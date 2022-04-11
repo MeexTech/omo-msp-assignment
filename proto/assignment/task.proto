@@ -15,22 +15,20 @@ service TaskService {
   rpc UpdateBase(ReqTaskUpdate) returns (ReplyInfo) {}
   rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
   rpc UpdateAgent(RequestFlag) returns (ReplyInfo) {}
-  rpc AppendRecord(RequestInfo) returns (ReplyList) {}
-  rpc SubtractRecord(RequestInfo) returns (ReplyList) {}
+  rpc AppendRecord(ReqTaskRecord) returns (ReplyTaskRecords) {}
+  rpc SubtractRecord(ReqTaskRecord) returns (ReplyTaskRecords) {}
 }
 
 message RecordInfo{
   string uid = 1;
   int64 created = 2;
-  int64 updated = 3;
-  string creator = 4;
-  string operator = 5;
-  string name = 6;
-  uint32 status = 7;
-  string remark = 8;
-  string agent = 9;
-  repeated string tags = 10;
-  repeated string assets = 11;
+  string creator = 3;
+  string name = 4;
+  uint32 status = 5;
+  string remark = 6;
+  string executor = 7;
+  repeated string tags = 8;
+  repeated string assets = 9;
 }
 
 message TaskInfo {
@@ -40,18 +38,20 @@ message TaskInfo {
   int64 updated = 4;
   string creator = 5;
   string operator = 6;
-  string client = 7; //委托人
+  string target = 7; //委托人
   string name = 8;
   string remark = 9;
   uint32 type = 10;
   uint32 status = 11;
-  string agent = 12; //代理人
-  string owner = 13; //所属场景
-  string pretask = 14; //前置任务
-  DateInfo duration = 15; //时间
-  repeated string tags = 16;
-  repeated string assets = 21;
-  repeated RecordInfo records = 22;
+  string owner = 12; //所属场景
+  string way = 13;
+  DateInfo duration = 14; //时间
+  repeated string executors = 15; //代理人或者执行人
+  repeated string pretasks = 16; //前置任务
+  repeated string tags = 17;
+  repeated string regions = 18;
+  repeated string assets = 19;
+  repeated RecordInfo records = 20;
 }
 
 message ReqTaskAdd{
@@ -59,8 +59,8 @@ message ReqTaskAdd{
   int32 type = 2;
   string remark = 3;
   string owner = 4;
-  string client = 5;
-  string pretask = 6;
+  string target = 5;
+  string pretasks = 6;
   DateInfo duration = 7;
   string operator = 8;
   string short = 9;
@@ -85,5 +85,20 @@ message ReqTaskUpdate{
   string name = 2;
   string remark = 3;
   string operator = 4;
+}
+
+message ReqTaskRecord{
+  string task = 1;
+  string creator = 2;
+  string name = 3;
+  string remark = 4;
+  string executor = 5;
+  repeated string tags = 6;
+  repeated string assets = 7;
+}
+
+message ReplyTaskRecords{
+  ReplyStatus status = 1;
+  repeated RecordInfo list = 2;
 }
 

@@ -41,6 +41,7 @@ type AgentService interface {
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateBase(ctx context.Context, in *ReqAgentUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateStatus(ctx context.Context, in *RequestIntFlag, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type agentService struct {
@@ -125,6 +126,16 @@ func (c *agentService) UpdateByFilter(ctx context.Context, in *RequestUpdate, op
 	return out, nil
 }
 
+func (c *agentService) UpdateStatus(ctx context.Context, in *RequestIntFlag, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "AgentService.UpdateStatus", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for AgentService service
 
 type AgentServiceHandler interface {
@@ -135,6 +146,7 @@ type AgentServiceHandler interface {
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateBase(context.Context, *ReqAgentUpdate, *ReplyInfo) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
+	UpdateStatus(context.Context, *RequestIntFlag, *ReplyInfo) error
 }
 
 func RegisterAgentServiceHandler(s server.Server, hdlr AgentServiceHandler, opts ...server.HandlerOption) error {
@@ -146,6 +158,7 @@ func RegisterAgentServiceHandler(s server.Server, hdlr AgentServiceHandler, opts
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateBase(ctx context.Context, in *ReqAgentUpdate, out *ReplyInfo) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
+		UpdateStatus(ctx context.Context, in *RequestIntFlag, out *ReplyInfo) error
 	}
 	type AgentService struct {
 		agentService
@@ -184,4 +197,8 @@ func (h *agentServiceHandler) UpdateBase(ctx context.Context, in *ReqAgentUpdate
 
 func (h *agentServiceHandler) UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error {
 	return h.AgentServiceHandler.UpdateByFilter(ctx, in, out)
+}
+
+func (h *agentServiceHandler) UpdateStatus(ctx context.Context, in *RequestIntFlag, out *ReplyInfo) error {
+	return h.AgentServiceHandler.UpdateStatus(ctx, in, out)
 }
