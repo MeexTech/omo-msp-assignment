@@ -1,6 +1,6 @@
 .PHONY: proto
 proto:
-    protoc --proto_path=. --micro_out=. --go_out=. proto/organization/common.proto
-	protoc --proto_path=. --micro_out=. --go_out=. proto/organization/task.proto
-	protoc --proto_path=. --micro_out=. --go_out=. proto/organization/team.proto
-	protoc --proto_path=. --micro_out=. --go_out=. proto/organization/volunteer.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/assignment/common.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/assignment/task.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/assignment/team.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/assignment/agent.proto

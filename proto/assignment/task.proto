@@ -57,11 +57,11 @@ message TaskInfo {
 message ReqTaskAdd{
   string name = 1;
   int32 type = 2;
-  string remark = 5;
-  string owner = 6;
-  string client = 7;
-  string pretask = 8;
-  DateInfo duration = 9;
+  string remark = 3;
+  string owner = 4;
+  string client = 5;
+  string pretask = 6;
+  DateInfo duration = 7;
   string operator = 8;
   string short = 9;
   repeated string assets = 10;
