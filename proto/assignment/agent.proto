@@ -8,6 +8,7 @@ service AgentService {
   rpc AddOne(ReqAgentAdd) returns (ReplyAgentOne) {}
   rpc GetOne(RequestInfo) returns (ReplyAgentOne) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc Search(RequestInfo) returns (ReplyAgentList) {}
   rpc GetListByFilter(RequestFilter) returns (ReplyAgentList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateBase(ReqAgentUpdate) returns (ReplyInfo) {}
@@ -38,11 +39,12 @@ message ReqAgentAdd {
   string name = 1;
   string owner = 2;
   string user = 3;
-  string remark = 5;
-  string location = 6;
-  string entity = 8;
-  string operator = 9;
-  string way = 10;
+  string remark = 4;
+  string entity = 5;
+  string operator = 6;
+  string way = 7;
+  uint32 type = 8;
+  repeated string regions = 9;
 }
 
 message ReqAgentUpdate{

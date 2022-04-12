@@ -37,6 +37,7 @@ type AgentService interface {
 	AddOne(ctx context.Context, in *ReqAgentAdd, opts ...client.CallOption) (*ReplyAgentOne, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyAgentOne, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
+	Search(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyAgentList, error)
 	GetListByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyAgentList, error)
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateBase(ctx context.Context, in *ReqAgentUpdate, opts ...client.CallOption) (*ReplyInfo, error)
@@ -79,6 +80,16 @@ func (c *agentService) GetOne(ctx context.Context, in *RequestInfo, opts ...clie
 func (c *agentService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error) {
 	req := c.c.NewRequest(c.name, "AgentService.RemoveOne", in)
 	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentService) Search(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyAgentList, error) {
+	req := c.c.NewRequest(c.name, "AgentService.Search", in)
+	out := new(ReplyAgentList)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -142,6 +153,7 @@ type AgentServiceHandler interface {
 	AddOne(context.Context, *ReqAgentAdd, *ReplyAgentOne) error
 	GetOne(context.Context, *RequestInfo, *ReplyAgentOne) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
+	Search(context.Context, *RequestInfo, *ReplyAgentList) error
 	GetListByFilter(context.Context, *RequestFilter, *ReplyAgentList) error
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateBase(context.Context, *ReqAgentUpdate, *ReplyInfo) error
@@ -154,6 +166,7 @@ func RegisterAgentServiceHandler(s server.Server, hdlr AgentServiceHandler, opts
 		AddOne(ctx context.Context, in *ReqAgentAdd, out *ReplyAgentOne) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyAgentOne) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
+		Search(ctx context.Context, in *RequestInfo, out *ReplyAgentList) error
 		GetListByFilter(ctx context.Context, in *RequestFilter, out *ReplyAgentList) error
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateBase(ctx context.Context, in *ReqAgentUpdate, out *ReplyInfo) error
@@ -181,6 +194,10 @@ func (h *agentServiceHandler) GetOne(ctx context.Context, in *RequestInfo, out *
 
 func (h *agentServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
 	return h.AgentServiceHandler.RemoveOne(ctx, in, out)
+}
+
+func (h *agentServiceHandler) Search(ctx context.Context, in *RequestInfo, out *ReplyAgentList) error {
+	return h.AgentServiceHandler.Search(ctx, in, out)
 }
 
 func (h *agentServiceHandler) GetListByFilter(ctx context.Context, in *RequestFilter, out *ReplyAgentList) error {

@@ -38,7 +38,7 @@ type TeamService interface {
 	UpdateBase(ctx context.Context, in *ReqTeamUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyTeamInfo, error)
-	GetOneByFilter(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyTeamInfo, error)
+	Search(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyTeamList, error)
 	GetListByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyTeamList, error)
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
@@ -99,9 +99,9 @@ func (c *teamService) GetOne(ctx context.Context, in *RequestInfo, opts ...clien
 	return out, nil
 }
 
-func (c *teamService) GetOneByFilter(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyTeamInfo, error) {
-	req := c.c.NewRequest(c.name, "TeamService.GetOneByFilter", in)
-	out := new(ReplyTeamInfo)
+func (c *teamService) Search(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyTeamList, error) {
+	req := c.c.NewRequest(c.name, "TeamService.Search", in)
+	out := new(ReplyTeamList)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -176,7 +176,7 @@ type TeamServiceHandler interface {
 	UpdateBase(context.Context, *ReqTeamUpdate, *ReplyInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyTeamInfo) error
-	GetOneByFilter(context.Context, *RequestInfo, *ReplyTeamInfo) error
+	Search(context.Context, *RequestInfo, *ReplyTeamList) error
 	GetListByFilter(context.Context, *RequestFilter, *ReplyTeamList) error
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
@@ -191,7 +191,7 @@ func RegisterTeamServiceHandler(s server.Server, hdlr TeamServiceHandler, opts .
 		UpdateBase(ctx context.Context, in *ReqTeamUpdate, out *ReplyInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyTeamInfo) error
-		GetOneByFilter(ctx context.Context, in *RequestInfo, out *ReplyTeamInfo) error
+		Search(ctx context.Context, in *RequestInfo, out *ReplyTeamList) error
 		GetListByFilter(ctx context.Context, in *RequestFilter, out *ReplyTeamList) error
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
@@ -226,8 +226,8 @@ func (h *teamServiceHandler) GetOne(ctx context.Context, in *RequestInfo, out *R
 	return h.TeamServiceHandler.GetOne(ctx, in, out)
 }
 
-func (h *teamServiceHandler) GetOneByFilter(ctx context.Context, in *RequestInfo, out *ReplyTeamInfo) error {
-	return h.TeamServiceHandler.GetOneByFilter(ctx, in, out)
+func (h *teamServiceHandler) Search(ctx context.Context, in *RequestInfo, out *ReplyTeamList) error {
+	return h.TeamServiceHandler.Search(ctx, in, out)
 }
 
 func (h *teamServiceHandler) GetListByFilter(ctx context.Context, in *RequestFilter, out *ReplyTeamList) error {

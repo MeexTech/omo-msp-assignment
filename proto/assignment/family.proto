@@ -9,13 +9,13 @@ service FamilyService {
   rpc UpdateBase(ReqFamilyUpdate) returns (ReplyInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyFamilyInfo) {}
-  rpc GetOneByFilter(RequestInfo) returns (ReplyFamilyInfo) {}
+  rpc Search(RequestInfo) returns (ReplyFamilyList) {}
   rpc GetListByFilter(RequestFilter) returns (ReplyFamilyList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
-  rpc AppendMember(RequestInfo) returns (ReplyList) {}
-  rpc SubtractMember(RequestInfo) returns (ReplyList) {}
+  rpc AppendMember(RequestInfo) returns (ReplyFamilyMembers) {}
+  rpc SubtractMember(RequestInfo) returns (ReplyFamilyMembers) {}
 }
 
 message FamilyInfo {
@@ -74,4 +74,9 @@ message ReplyFamilyInfo{
 message ReplyFamilyList{
   ReplyStatus status = 1;
   repeated FamilyInfo list = 2;
+}
+
+message ReplyFamilyMembers{
+  ReplyStatus status = 1;
+  repeated IdentifyInfo list = 2;
 }

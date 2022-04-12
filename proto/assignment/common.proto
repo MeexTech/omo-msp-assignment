@@ -21,8 +21,8 @@ message AddressInfo {
 }
 
 message RequestInfo {
-  string owner = 1;
-  string uid = 2;
+  string uid = 1;
+  string flag = 2;
   string operator = 3;
 }
 

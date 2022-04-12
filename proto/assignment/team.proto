@@ -9,7 +9,7 @@ service TeamService {
   rpc UpdateBase(ReqTeamUpdate) returns (ReplyInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyTeamInfo) {}
-  rpc GetOneByFilter(RequestInfo) returns (ReplyTeamInfo) {}
+  rpc Search(RequestInfo) returns (ReplyTeamList) {}
   rpc GetListByFilter(RequestFilter) returns (ReplyTeamList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
@@ -40,7 +40,10 @@ message ReqTeamAdd {
   string owner = 1;
   string name = 2;
   string remark = 3;
-  string operator = 4;
+  string region = 4;
+  string operator = 5;
+  string master = 6;
+  repeated string tags = 7;
 }
 
 message ReqTeamUpdate{

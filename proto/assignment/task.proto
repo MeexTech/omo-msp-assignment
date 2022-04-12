@@ -7,16 +7,17 @@ import "proto/assignment/common.proto";
 service TaskService {
   rpc AddOne(ReqTaskAdd) returns (ReplyTaskOne) {}
   rpc GetOne(RequestInfo) returns (ReplyTaskOne) {}
-  rpc GetOneByFilter(RequestInfo) returns (ReplyTaskOne) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc Search(RequestInfo) returns (ReplyTaskList) {}
   rpc GetListByFilter(RequestFilter) returns (ReplyTaskList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc UpdateBase(ReqTaskUpdate) returns (ReplyInfo) {}
   rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
-  rpc UpdateAgent(RequestFlag) returns (ReplyInfo) {}
+  rpc AppendAgent(RequestFlag) returns (ReplyList) {}
+  rpc SubtractAgent(RequestFlag) returns (ReplyList) {}
   rpc AppendRecord(ReqTaskRecord) returns (ReplyTaskRecords) {}
-  rpc SubtractRecord(ReqTaskRecord) returns (ReplyTaskRecords) {}
+  rpc SubtractRecord(RequestInfo) returns (ReplyTaskRecords) {}
 }
 
 message RecordInfo{
@@ -60,11 +61,13 @@ message ReqTaskAdd{
   string remark = 3;
   string owner = 4;
   string target = 5;
-  string pretasks = 6;
-  DateInfo duration = 7;
-  string operator = 8;
-  string short = 9;
-  repeated string assets = 10;
+  string operator = 6;
+  string way = 7;
+  DateInfo duration = 8;
+  repeated string regions = 9;
+  repeated string pretasks = 10;
+  repeated string assets = 11;
+  repeated string tags = 12;
 }
 
 message ReplyTaskOne{
@@ -99,6 +102,7 @@ message ReqTaskRecord{
 
 message ReplyTaskRecords{
   ReplyStatus status = 1;
-  repeated RecordInfo list = 2;
+  string task = 2;
+  repeated RecordInfo list = 3;
 }
 
