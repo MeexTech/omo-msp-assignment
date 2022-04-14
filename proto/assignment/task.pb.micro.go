@@ -43,8 +43,6 @@ type TaskService interface {
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateBase(ctx context.Context, in *ReqTaskUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateStatus(ctx context.Context, in *RequestIntFlag, opts ...client.CallOption) (*ReplyInfo, error)
-	AppendAgent(ctx context.Context, in *RequestFlag, opts ...client.CallOption) (*ReplyList, error)
-	SubtractAgent(ctx context.Context, in *RequestFlag, opts ...client.CallOption) (*ReplyList, error)
 	AppendRecord(ctx context.Context, in *ReqTaskRecord, opts ...client.CallOption) (*ReplyTaskRecords, error)
 	SubtractRecord(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyTaskRecords, error)
 }
@@ -151,26 +149,6 @@ func (c *taskService) UpdateStatus(ctx context.Context, in *RequestIntFlag, opts
 	return out, nil
 }
 
-func (c *taskService) AppendAgent(ctx context.Context, in *RequestFlag, opts ...client.CallOption) (*ReplyList, error) {
-	req := c.c.NewRequest(c.name, "TaskService.AppendAgent", in)
-	out := new(ReplyList)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *taskService) SubtractAgent(ctx context.Context, in *RequestFlag, opts ...client.CallOption) (*ReplyList, error) {
-	req := c.c.NewRequest(c.name, "TaskService.SubtractAgent", in)
-	out := new(ReplyList)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *taskService) AppendRecord(ctx context.Context, in *ReqTaskRecord, opts ...client.CallOption) (*ReplyTaskRecords, error) {
 	req := c.c.NewRequest(c.name, "TaskService.AppendRecord", in)
 	out := new(ReplyTaskRecords)
@@ -203,8 +181,6 @@ type TaskServiceHandler interface {
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 	UpdateBase(context.Context, *ReqTaskUpdate, *ReplyInfo) error
 	UpdateStatus(context.Context, *RequestIntFlag, *ReplyInfo) error
-	AppendAgent(context.Context, *RequestFlag, *ReplyList) error
-	SubtractAgent(context.Context, *RequestFlag, *ReplyList) error
 	AppendRecord(context.Context, *ReqTaskRecord, *ReplyTaskRecords) error
 	SubtractRecord(context.Context, *RequestInfo, *ReplyTaskRecords) error
 }
@@ -220,8 +196,6 @@ func RegisterTaskServiceHandler(s server.Server, hdlr TaskServiceHandler, opts .
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 		UpdateBase(ctx context.Context, in *ReqTaskUpdate, out *ReplyInfo) error
 		UpdateStatus(ctx context.Context, in *RequestIntFlag, out *ReplyInfo) error
-		AppendAgent(ctx context.Context, in *RequestFlag, out *ReplyList) error
-		SubtractAgent(ctx context.Context, in *RequestFlag, out *ReplyList) error
 		AppendRecord(ctx context.Context, in *ReqTaskRecord, out *ReplyTaskRecords) error
 		SubtractRecord(ctx context.Context, in *RequestInfo, out *ReplyTaskRecords) error
 	}
@@ -270,14 +244,6 @@ func (h *taskServiceHandler) UpdateBase(ctx context.Context, in *ReqTaskUpdate, 
 
 func (h *taskServiceHandler) UpdateStatus(ctx context.Context, in *RequestIntFlag, out *ReplyInfo) error {
 	return h.TaskServiceHandler.UpdateStatus(ctx, in, out)
-}
-
-func (h *taskServiceHandler) AppendAgent(ctx context.Context, in *RequestFlag, out *ReplyList) error {
-	return h.TaskServiceHandler.AppendAgent(ctx, in, out)
-}
-
-func (h *taskServiceHandler) SubtractAgent(ctx context.Context, in *RequestFlag, out *ReplyList) error {
-	return h.TaskServiceHandler.SubtractAgent(ctx, in, out)
 }
 
 func (h *taskServiceHandler) AppendRecord(ctx context.Context, in *ReqTaskRecord, out *ReplyTaskRecords) error {

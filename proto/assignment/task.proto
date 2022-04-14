@@ -14,8 +14,6 @@ service TaskService {
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc UpdateBase(ReqTaskUpdate) returns (ReplyInfo) {}
   rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
-  rpc AppendAgent(RequestFlag) returns (ReplyList) {}
-  rpc SubtractAgent(RequestFlag) returns (ReplyList) {}
   rpc AppendRecord(ReqTaskRecord) returns (ReplyTaskRecords) {}
   rpc SubtractRecord(RequestInfo) returns (ReplyTaskRecords) {}
 }
@@ -96,8 +94,9 @@ message ReqTaskRecord{
   string name = 3;
   string remark = 4;
   string executor = 5;
-  repeated string tags = 6;
-  repeated string assets = 7;
+  uint32 status = 6;
+  repeated string tags = 7;
+  repeated string assets = 8;
 }
 
 message ReplyTaskRecords{
