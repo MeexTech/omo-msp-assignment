@@ -14,8 +14,8 @@ service TeamService {
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
-  rpc AppendMember(RequestInfo) returns (ReplyList) {}
-  rpc SubtractMember(RequestInfo) returns (ReplyList) {}
+  rpc AppendMember(RequestList) returns (ReplyList) {}
+  rpc SubtractMember(RequestList) returns (ReplyList) {}
 }
 
 message TeamInfo {

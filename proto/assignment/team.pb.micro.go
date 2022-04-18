@@ -43,8 +43,8 @@ type TeamService interface {
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateStatus(ctx context.Context, in *RequestIntFlag, opts ...client.CallOption) (*ReplyInfo, error)
-	AppendMember(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error)
-	SubtractMember(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error)
+	AppendMember(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
+	SubtractMember(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
 }
 
 type teamService struct {
@@ -149,7 +149,7 @@ func (c *teamService) UpdateStatus(ctx context.Context, in *RequestIntFlag, opts
 	return out, nil
 }
 
-func (c *teamService) AppendMember(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error) {
+func (c *teamService) AppendMember(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error) {
 	req := c.c.NewRequest(c.name, "TeamService.AppendMember", in)
 	out := new(ReplyList)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -159,7 +159,7 @@ func (c *teamService) AppendMember(ctx context.Context, in *RequestInfo, opts ..
 	return out, nil
 }
 
-func (c *teamService) SubtractMember(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error) {
+func (c *teamService) SubtractMember(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error) {
 	req := c.c.NewRequest(c.name, "TeamService.SubtractMember", in)
 	out := new(ReplyList)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -181,8 +181,8 @@ type TeamServiceHandler interface {
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 	UpdateStatus(context.Context, *RequestIntFlag, *ReplyInfo) error
-	AppendMember(context.Context, *RequestInfo, *ReplyList) error
-	SubtractMember(context.Context, *RequestInfo, *ReplyList) error
+	AppendMember(context.Context, *RequestList, *ReplyList) error
+	SubtractMember(context.Context, *RequestList, *ReplyList) error
 }
 
 func RegisterTeamServiceHandler(s server.Server, hdlr TeamServiceHandler, opts ...server.HandlerOption) error {
@@ -196,8 +196,8 @@ func RegisterTeamServiceHandler(s server.Server, hdlr TeamServiceHandler, opts .
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 		UpdateStatus(ctx context.Context, in *RequestIntFlag, out *ReplyInfo) error
-		AppendMember(ctx context.Context, in *RequestInfo, out *ReplyList) error
-		SubtractMember(ctx context.Context, in *RequestInfo, out *ReplyList) error
+		AppendMember(ctx context.Context, in *RequestList, out *ReplyList) error
+		SubtractMember(ctx context.Context, in *RequestList, out *ReplyList) error
 	}
 	type TeamService struct {
 		teamService
@@ -246,10 +246,10 @@ func (h *teamServiceHandler) UpdateStatus(ctx context.Context, in *RequestIntFla
 	return h.TeamServiceHandler.UpdateStatus(ctx, in, out)
 }
 
-func (h *teamServiceHandler) AppendMember(ctx context.Context, in *RequestInfo, out *ReplyList) error {
+func (h *teamServiceHandler) AppendMember(ctx context.Context, in *RequestList, out *ReplyList) error {
 	return h.TeamServiceHandler.AppendMember(ctx, in, out)
 }
 
-func (h *teamServiceHandler) SubtractMember(ctx context.Context, in *RequestInfo, out *ReplyList) error {
+func (h *teamServiceHandler) SubtractMember(ctx context.Context, in *RequestList, out *ReplyList) error {
 	return h.TeamServiceHandler.SubtractMember(ctx, in, out)
 }

@@ -14,8 +14,8 @@ service FamilyService {
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
-  rpc AppendMember(RequestInfo) returns (ReplyFamilyMembers) {}
-  rpc SubtractMember(RequestInfo) returns (ReplyFamilyMembers) {}
+  rpc AppendMember(RequestList) returns (ReplyFamilyMembers) {}
+  rpc SubtractMember(RequestList) returns (ReplyFamilyMembers) {}
 }
 
 message FamilyInfo {

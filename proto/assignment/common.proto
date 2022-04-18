@@ -69,12 +69,6 @@ message RequestAddress{
   string operator = 7;
 }
 
-message RequestFlag{
-  string uid = 1;
-  string flag = 2;
-  string operator = 3;
-}
-
 message RequestIntFlag{
   string uid = 1;
   int32 flag = 2;
@@ -84,7 +78,7 @@ message RequestIntFlag{
 message RequestList{
   string uid = 1;
   string operator = 2;
-  repeated string  list = 3;
+  repeated string list = 3;
 }
 
 message ReplyList {
