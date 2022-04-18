@@ -43,8 +43,8 @@ type FamilyService interface {
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateStatus(ctx context.Context, in *RequestIntFlag, opts ...client.CallOption) (*ReplyInfo, error)
-	AppendMember(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyFamilyMembers, error)
-	SubtractMember(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyFamilyMembers, error)
+	AppendMember(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFamilyMembers, error)
+	SubtractMember(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFamilyMembers, error)
 }
 
 type familyService struct {
@@ -149,7 +149,7 @@ func (c *familyService) UpdateStatus(ctx context.Context, in *RequestIntFlag, op
 	return out, nil
 }
 
-func (c *familyService) AppendMember(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyFamilyMembers, error) {
+func (c *familyService) AppendMember(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFamilyMembers, error) {
 	req := c.c.NewRequest(c.name, "FamilyService.AppendMember", in)
 	out := new(ReplyFamilyMembers)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -159,7 +159,7 @@ func (c *familyService) AppendMember(ctx context.Context, in *RequestList, opts 
 	return out, nil
 }
 
-func (c *familyService) SubtractMember(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyFamilyMembers, error) {
+func (c *familyService) SubtractMember(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFamilyMembers, error) {
 	req := c.c.NewRequest(c.name, "FamilyService.SubtractMember", in)
 	out := new(ReplyFamilyMembers)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -181,8 +181,8 @@ type FamilyServiceHandler interface {
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 	UpdateStatus(context.Context, *RequestIntFlag, *ReplyInfo) error
-	AppendMember(context.Context, *RequestList, *ReplyFamilyMembers) error
-	SubtractMember(context.Context, *RequestList, *ReplyFamilyMembers) error
+	AppendMember(context.Context, *RequestInfo, *ReplyFamilyMembers) error
+	SubtractMember(context.Context, *RequestInfo, *ReplyFamilyMembers) error
 }
 
 func RegisterFamilyServiceHandler(s server.Server, hdlr FamilyServiceHandler, opts ...server.HandlerOption) error {
@@ -196,8 +196,8 @@ func RegisterFamilyServiceHandler(s server.Server, hdlr FamilyServiceHandler, op
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 		UpdateStatus(ctx context.Context, in *RequestIntFlag, out *ReplyInfo) error
-		AppendMember(ctx context.Context, in *RequestList, out *ReplyFamilyMembers) error
-		SubtractMember(ctx context.Context, in *RequestList, out *ReplyFamilyMembers) error
+		AppendMember(ctx context.Context, in *RequestInfo, out *ReplyFamilyMembers) error
+		SubtractMember(ctx context.Context, in *RequestInfo, out *ReplyFamilyMembers) error
 	}
 	type FamilyService struct {
 		familyService
@@ -246,10 +246,10 @@ func (h *familyServiceHandler) UpdateStatus(ctx context.Context, in *RequestIntF
 	return h.FamilyServiceHandler.UpdateStatus(ctx, in, out)
 }
 
-func (h *familyServiceHandler) AppendMember(ctx context.Context, in *RequestList, out *ReplyFamilyMembers) error {
+func (h *familyServiceHandler) AppendMember(ctx context.Context, in *RequestInfo, out *ReplyFamilyMembers) error {
 	return h.FamilyServiceHandler.AppendMember(ctx, in, out)
 }
 
-func (h *familyServiceHandler) SubtractMember(ctx context.Context, in *RequestList, out *ReplyFamilyMembers) error {
+func (h *familyServiceHandler) SubtractMember(ctx context.Context, in *RequestInfo, out *ReplyFamilyMembers) error {
 	return h.FamilyServiceHandler.SubtractMember(ctx, in, out)
 }
