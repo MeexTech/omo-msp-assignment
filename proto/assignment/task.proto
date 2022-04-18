@@ -86,6 +86,7 @@ message ReqTaskUpdate{
   string name = 2;
   string remark = 3;
   string operator = 4;
+  repeated string assets = 5;
 }
 
 message ReqTaskRecord{
