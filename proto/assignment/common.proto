@@ -32,7 +32,8 @@ message RequestFilter {
   string value = 3;
   uint32 page = 4;
   uint32 number = 5;
-  repeated string values = 6;
+  string operator = 6;
+  repeated string values = 7;
 }
 
 message RequestUpdate{
