@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package omo.msp.assignment;
+option go_package= "proto/assignment";
+import "proto/assignment/common.proto";
+
+service CoterieService {
+  rpc AddOne(ReqCoterieAdd) returns (ReplyCoterieInfo) {}
+  rpc UpdateBase(ReqCoterieUpdate) returns (ReplyInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyCoterieInfo) {}
+  rpc Search(RequestInfo) returns (ReplyCoterieList) {}
+  rpc GetListByFilter(RequestFilter) returns (ReplyCoterieList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
+  rpc AppendMember(RequestInfo) returns (ReplyCoterieMembers) {}
+  rpc SubtractMember(RequestInfo) returns (ReplyCoterieMembers) {}
+}
+
+message CoterieInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+  string name = 7;
+  string remark = 8;
+  string cover = 9;
+  uint32 status = 10;
+  string passwords = 11;
+  string master = 12;//正的
+  string centre = 13; //焦点对象、主题、用户、实体
+  uint32 type = 14;
+  uint32 meta = 15;
+  repeated string assistants = 18;//副的
+  repeated string tags = 19;
+  repeated IdentifyInfo members = 20;
+}
+
+message ReqCoterieAdd {
+  string sn = 1;
+  string name = 2;
+  string centre = 3;
+  uint32 type = 4;
+  string remark = 5;
+  string operator = 6;
+  string passwords = 7;
+  string cover = 8;
+  string master = 9;
+  repeated IdentifyInfo members = 10;
+}
+
+message ReqCoterieUpdate{
+  string uid = 1;
+  string name = 2;
+  string remark = 3;
+  string passwords = 4;
+  string operator = 5;
+}
+
+message ReplyCoterieInfo{
+  ReplyStatus status = 1;
+  CoterieInfo info = 2;
+}
+
+message ReplyCoterieList{
+  ReplyStatus status = 1;
+  repeated CoterieInfo list = 2;
+}
+
+message ReplyCoterieMembers{
+  ReplyStatus status = 1;
+  repeated IdentifyInfo list = 2;
+}

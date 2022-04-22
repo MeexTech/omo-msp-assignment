@@ -26,6 +26,12 @@ message RequestInfo {
   string operator = 3;
 }
 
+message IdentifyInfo{
+  string user = 1;
+  string name = 2;
+  string remark = 3;
+}
+
 message RequestFilter {
   string owner = 1;
   string key = 2;

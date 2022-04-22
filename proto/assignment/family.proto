@@ -42,11 +42,6 @@ message FamilyInfo {
   repeated IdentifyInfo members = 30;
 }
 
-message IdentifyInfo{
-  string user = 1;
-  string remark = 2;
-}
-
 message ReqFamilyAdd {
   string sn = 1;
   string name = 2;
