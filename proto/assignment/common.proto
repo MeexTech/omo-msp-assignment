@@ -24,6 +24,8 @@ message RequestInfo {
   string uid = 1;
   string flag = 2;
   string operator = 3;
+  string name = 4;
+  string user = 5;
 }
 
 message IdentifyInfo{
