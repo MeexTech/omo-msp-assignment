@@ -33,7 +33,7 @@ message CoterieInfo {
   string master = 12;//正的
   string centre = 13; //焦点对象、主题、用户、实体
   uint32 type = 14;
-  uint32 meta = 15;
+  string meta = 15;
   repeated string assistants = 18;//副的
   repeated string tags = 19;
   repeated IdentifyInfo members = 20;
