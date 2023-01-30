@@ -12,6 +12,8 @@ service MeetingService {
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
+  rpc UpdateBase(ReqMeetingUpdate) returns (ReplyInfo) {}
+  rpc Sign(ReqMeetingSign) returns (ReplyInfo) {}
 }
 
 message MeetingInfo {
@@ -47,6 +49,20 @@ message ReqMeetingAdd {
   string appointed = 6;
   string location = 7;
   string operator = 8;
+}
+
+message ReqMeetingUpdate{
+  string uid = 1;
+  string name = 2;
+  string remark = 3;
+  string operator = 4;
+}
+
+message ReqMeetingSign{
+  string uid = 1;
+  string member = 2;
+  string location = 3;
+  string operator = 4;
 }
 
 message ReplyMeetingOne{

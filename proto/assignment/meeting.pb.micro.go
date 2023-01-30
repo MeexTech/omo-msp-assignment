@@ -41,6 +41,8 @@ type MeetingService interface {
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateStatus(ctx context.Context, in *RequestIntFlag, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateBase(ctx context.Context, in *ReqMeetingUpdate, opts ...client.CallOption) (*ReplyInfo, error)
+	Sign(ctx context.Context, in *ReqMeetingSign, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type meetingService struct {
@@ -125,6 +127,26 @@ func (c *meetingService) UpdateStatus(ctx context.Context, in *RequestIntFlag, o
 	return out, nil
 }
 
+func (c *meetingService) UpdateBase(ctx context.Context, in *ReqMeetingUpdate, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "MeetingService.UpdateBase", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *meetingService) Sign(ctx context.Context, in *ReqMeetingSign, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "MeetingService.Sign", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for MeetingService service
 
 type MeetingServiceHandler interface {
@@ -135,6 +157,8 @@ type MeetingServiceHandler interface {
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 	UpdateStatus(context.Context, *RequestIntFlag, *ReplyInfo) error
+	UpdateBase(context.Context, *ReqMeetingUpdate, *ReplyInfo) error
+	Sign(context.Context, *ReqMeetingSign, *ReplyInfo) error
 }
 
 func RegisterMeetingServiceHandler(s server.Server, hdlr MeetingServiceHandler, opts ...server.HandlerOption) error {
@@ -146,6 +170,8 @@ func RegisterMeetingServiceHandler(s server.Server, hdlr MeetingServiceHandler, 
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 		UpdateStatus(ctx context.Context, in *RequestIntFlag, out *ReplyInfo) error
+		UpdateBase(ctx context.Context, in *ReqMeetingUpdate, out *ReplyInfo) error
+		Sign(ctx context.Context, in *ReqMeetingSign, out *ReplyInfo) error
 	}
 	type MeetingService struct {
 		meetingService
@@ -184,4 +210,12 @@ func (h *meetingServiceHandler) UpdateByFilter(ctx context.Context, in *RequestU
 
 func (h *meetingServiceHandler) UpdateStatus(ctx context.Context, in *RequestIntFlag, out *ReplyInfo) error {
 	return h.MeetingServiceHandler.UpdateStatus(ctx, in, out)
+}
+
+func (h *meetingServiceHandler) UpdateBase(ctx context.Context, in *ReqMeetingUpdate, out *ReplyInfo) error {
+	return h.MeetingServiceHandler.UpdateBase(ctx, in, out)
+}
+
+func (h *meetingServiceHandler) Sign(ctx context.Context, in *ReqMeetingSign, out *ReplyInfo) error {
+	return h.MeetingServiceHandler.Sign(ctx, in, out)
 }

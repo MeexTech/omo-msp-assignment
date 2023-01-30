@@ -37,6 +37,7 @@ message ReqApplyAdd {
   uint32 type = 3;
   string applicant = 4;
   string inviter = 5;
+  string operator = 6;
 }
 
 message ReplyApplyOne{

@@ -82,6 +82,7 @@ message RequestIntFlag{
   string uid = 1;
   int32 flag = 2;
   string operator = 3;
+  string remark = 4;
 }
 
 message RequestList{
