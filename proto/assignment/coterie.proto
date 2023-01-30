@@ -40,7 +40,6 @@ message CoterieInfo {
 }
 
 message ReqCoterieAdd {
-  string sn = 1;
   string name = 2;
   string centre = 3;
   uint32 type = 4;

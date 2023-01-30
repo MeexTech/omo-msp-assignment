@@ -31,9 +31,11 @@ message TeamInfo {
   string master = 10;//正的
   string region = 11;
   uint32 status = 12;
-  repeated string assistants = 13;//副的
-  repeated string tags = 14;
-  repeated string members = 15;
+  uint32 limit = 13;
+  string parent = 14;
+  repeated string assistants = 15;//副的
+  repeated string tags = 16;
+  repeated string members = 17;
 }
 
 message ReqTeamAdd {
@@ -43,7 +45,9 @@ message ReqTeamAdd {
   string region = 4;
   string operator = 5;
   string master = 6;
-  repeated string tags = 7;
+  string parent = 7;
+  uint32 limit = 8;
+  repeated string tags = 9;
 }
 
 message ReqTeamUpdate{

@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package omo.msp.assignment;
+option go_package= "proto/assignment";
+import "proto/assignment/common.proto";
+
+service ApplyService {
+  rpc AddOne(ReqApplyAdd) returns (ReplyApplyOne) {}
+  rpc GetOne(RequestInfo) returns (ReplyApplyOne) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetListByFilter(RequestFilter) returns (ReplyApplyList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
+}
+
+message ApplyInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+
+  uint32 status = 7;
+  uint32 type = 8;
+  string applicant = 9;
+  string inviter = 10;
+  string owner = 11; //注册地或者所属地
+  string group = 12; //
+  string reason = 13;
+}
+
+message ReqApplyAdd {
+  string owner = 1;
+  string group = 2;
+  uint32 type = 3;
+  string applicant = 4;
+  string inviter = 5;
+}
+
+message ReplyApplyOne{
+  ApplyInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReplyApplyList{
+  uint32 total = 1;
+  uint32 pageMax = 2;
+  uint32 pageNow = 3;
+  repeated ApplyInfo list = 4;
+  ReplyStatus status = 5;
+}

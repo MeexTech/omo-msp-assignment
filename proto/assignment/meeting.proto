@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package omo.msp.assignment;
+option go_package= "proto/assignment";
+import "proto/assignment/common.proto";
+
+service MeetingService {
+  rpc AddOne(ReqMeetingAdd) returns (ReplyMeetingOne) {}
+  rpc GetOne(RequestInfo) returns (ReplyMeetingOne) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetListByFilter(RequestFilter) returns (ReplyMeetingList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc UpdateStatus(RequestIntFlag) returns (ReplyInfo) {}
+}
+
+message MeetingInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+
+  uint32 status = 7;
+  uint32 type = 8;
+  int64  stopped = 9;
+  int64  started = 10;
+  string owner = 11; //注册地或者所属地
+  string group = 12; //
+  string location = 13;
+  uint32 duration = 14;
+  string appointed = 15;
+  string name = 16;
+  string remark = 17;
+  repeated string signs = 20;
+  repeated string submits = 21;
+  repeated string notifies = 22;
+}
+
+message ReqMeetingAdd {
+  uint32 type = 1;
+  string owner = 2;
+  string group = 3;
+  string name = 4;
+  string remark = 5;
+  string appointed = 6;
+  string location = 7;
+  string operator = 8;
+}
+
+message ReplyMeetingOne{
+  MeetingInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReplyMeetingList{
+  uint32 total = 1;
+  uint32 pageMax = 2;
+  uint32 pageNow = 3;
+  repeated MeetingInfo list = 4;
+  ReplyStatus status = 5;
+}
