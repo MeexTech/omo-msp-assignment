@@ -8,3 +8,5 @@ proto:
 	protoc --proto_path=. --micro_out=. --go_out=. proto/assignment/coterie.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/assignment/apply.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/assignment/meeting.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/assignment/category.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/assignment/question.proto

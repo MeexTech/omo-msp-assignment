@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package omo.msp.assignment;
+option go_package= "proto/assignment";
+import "proto/assignment/common.proto";
+
+service CategoryService {
+  rpc AddOne(ReqCategoryAdd) returns (ReplyCategoryOne) {}
+  rpc GetOne(RequestInfo) returns (ReplyCategoryOne) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetListByFilter(RequestFilter) returns (ReplyCategoryList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateBase(ReqCategoryUpdate) returns (ReplyInfo) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+}
+
+message CategoryInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+  string name = 7;
+  string remark = 8;
+  string parent = 9;
+  string source = 10;
+  uint32 type = 11;
+  uint32 weight = 12;
+  repeated CategoryInfo children = 21;
+}
+
+message ReqCategoryAdd {
+  string name = 1;
+  string parent = 2;
+  string source = 3;
+  string remark = 4;
+  string operator = 6;
+  uint32 weight = 7;
+  uint32 type = 8;
+}
+
+message ReqCategoryUpdate{
+  string uid = 1;
+  string name = 2;
+  string remark = 3;
+  string operator = 4;
+  string parent = 5;
+  string source = 6;
+  uint32 weight = 7;
+}
+
+message ReplyCategoryOne{
+  CategoryInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReplyCategoryList{
+  uint32 total = 1;
+  uint32 pageMax = 2;
+  uint32 pageNow = 3;
+  repeated CategoryInfo list = 4;
+  ReplyStatus status = 5;
+}
