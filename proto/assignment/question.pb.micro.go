@@ -39,7 +39,7 @@ type QuestionService interface {
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	GetListByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyQuestionList, error)
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
-	UpdateBase(ctx context.Context, in *ReqQuestionUpdate, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateBase(ctx context.Context, in *ReqQuestionUpdate, opts ...client.CallOption) (*ReplyQuestionOne, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
@@ -105,9 +105,9 @@ func (c *questionService) GetStatistic(ctx context.Context, in *RequestFilter, o
 	return out, nil
 }
 
-func (c *questionService) UpdateBase(ctx context.Context, in *ReqQuestionUpdate, opts ...client.CallOption) (*ReplyInfo, error) {
+func (c *questionService) UpdateBase(ctx context.Context, in *ReqQuestionUpdate, opts ...client.CallOption) (*ReplyQuestionOne, error) {
 	req := c.c.NewRequest(c.name, "QuestionService.UpdateBase", in)
-	out := new(ReplyInfo)
+	out := new(ReplyQuestionOne)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -133,7 +133,7 @@ type QuestionServiceHandler interface {
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	GetListByFilter(context.Context, *RequestFilter, *ReplyQuestionList) error
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
-	UpdateBase(context.Context, *ReqQuestionUpdate, *ReplyInfo) error
+	UpdateBase(context.Context, *ReqQuestionUpdate, *ReplyQuestionOne) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 }
 
@@ -144,7 +144,7 @@ func RegisterQuestionServiceHandler(s server.Server, hdlr QuestionServiceHandler
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		GetListByFilter(ctx context.Context, in *RequestFilter, out *ReplyQuestionList) error
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
-		UpdateBase(ctx context.Context, in *ReqQuestionUpdate, out *ReplyInfo) error
+		UpdateBase(ctx context.Context, in *ReqQuestionUpdate, out *ReplyQuestionOne) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 	}
 	type QuestionService struct {
@@ -178,7 +178,7 @@ func (h *questionServiceHandler) GetStatistic(ctx context.Context, in *RequestFi
 	return h.QuestionServiceHandler.GetStatistic(ctx, in, out)
 }
 
-func (h *questionServiceHandler) UpdateBase(ctx context.Context, in *ReqQuestionUpdate, out *ReplyInfo) error {
+func (h *questionServiceHandler) UpdateBase(ctx context.Context, in *ReqQuestionUpdate, out *ReplyQuestionOne) error {
 	return h.QuestionServiceHandler.UpdateBase(ctx, in, out)
 }
 

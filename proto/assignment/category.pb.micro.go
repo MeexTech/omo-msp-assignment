@@ -39,7 +39,7 @@ type CategoryService interface {
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	GetListByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyCategoryList, error)
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
-	UpdateBase(ctx context.Context, in *ReqCategoryUpdate, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateBase(ctx context.Context, in *ReqCategoryUpdate, opts ...client.CallOption) (*ReplyCategoryOne, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
@@ -105,9 +105,9 @@ func (c *categoryService) GetStatistic(ctx context.Context, in *RequestFilter, o
 	return out, nil
 }
 
-func (c *categoryService) UpdateBase(ctx context.Context, in *ReqCategoryUpdate, opts ...client.CallOption) (*ReplyInfo, error) {
+func (c *categoryService) UpdateBase(ctx context.Context, in *ReqCategoryUpdate, opts ...client.CallOption) (*ReplyCategoryOne, error) {
 	req := c.c.NewRequest(c.name, "CategoryService.UpdateBase", in)
-	out := new(ReplyInfo)
+	out := new(ReplyCategoryOne)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -133,7 +133,7 @@ type CategoryServiceHandler interface {
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	GetListByFilter(context.Context, *RequestFilter, *ReplyCategoryList) error
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
-	UpdateBase(context.Context, *ReqCategoryUpdate, *ReplyInfo) error
+	UpdateBase(context.Context, *ReqCategoryUpdate, *ReplyCategoryOne) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 }
 
@@ -144,7 +144,7 @@ func RegisterCategoryServiceHandler(s server.Server, hdlr CategoryServiceHandler
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		GetListByFilter(ctx context.Context, in *RequestFilter, out *ReplyCategoryList) error
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
-		UpdateBase(ctx context.Context, in *ReqCategoryUpdate, out *ReplyInfo) error
+		UpdateBase(ctx context.Context, in *ReqCategoryUpdate, out *ReplyCategoryOne) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 	}
 	type CategoryService struct {
@@ -178,7 +178,7 @@ func (h *categoryServiceHandler) GetStatistic(ctx context.Context, in *RequestFi
 	return h.CategoryServiceHandler.GetStatistic(ctx, in, out)
 }
 
-func (h *categoryServiceHandler) UpdateBase(ctx context.Context, in *ReqCategoryUpdate, out *ReplyInfo) error {
+func (h *categoryServiceHandler) UpdateBase(ctx context.Context, in *ReqCategoryUpdate, out *ReplyCategoryOne) error {
 	return h.CategoryServiceHandler.UpdateBase(ctx, in, out)
 }
 

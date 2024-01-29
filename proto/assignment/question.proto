@@ -10,7 +10,7 @@ service QuestionService {
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc GetListByFilter(RequestFilter) returns (ReplyQuestionList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
-  rpc UpdateBase(ReqQuestionUpdate) returns (ReplyInfo) {}
+  rpc UpdateBase(ReqQuestionUpdate) returns (ReplyQuestionOne) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
 }
 
@@ -53,6 +53,8 @@ message ReqQuestionUpdate{
   string operator = 4;
   uint32 cd = 5;
   string category = 6;
+  repeated uint32 answers = 20;
+  repeated QuestionOption options = 21;
 }
 
 message ReplyQuestionOne{
