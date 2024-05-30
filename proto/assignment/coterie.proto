@@ -67,6 +67,8 @@ message ReplyCoterieInfo{
 message ReplyCoterieList{
   ReplyStatus status = 1;
   repeated CoterieInfo list = 2;
+  uint32 total = 3;
+  uint32 pages = 4;
 }
 
 message ReplyCoterieMembers{

@@ -65,4 +65,6 @@ message ReplyTeamInfo{
 message ReplyTeamList{
   ReplyStatus status = 1;
   repeated TeamInfo list = 2;
+  uint32 total = 3;
+  uint32 pages = 4;
 }

@@ -69,6 +69,8 @@ message ReplyFamilyInfo{
 message ReplyFamilyList{
   ReplyStatus status = 1;
   repeated FamilyInfo list = 2;
+  uint32 total = 3;
+  uint32 pages = 4;
 }
 
 message ReplyFamilyMembers{
