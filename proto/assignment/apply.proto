@@ -29,6 +29,7 @@ message ApplyInfo {
   string owner = 11; //注册地或者所属地
   string group = 12; //
   string reason = 13;
+  string remark = 14;
 }
 
 message ReqApplyAdd {
@@ -38,6 +39,7 @@ message ReqApplyAdd {
   string applicant = 4;
   string inviter = 5;
   string operator = 6;
+  string remark = 7;
 }
 
 message ReplyApplyOne{
