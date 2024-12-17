@@ -35,6 +35,7 @@ message FamilyInfo {
   string passwords = 14;
   string master = 15;//正的
   repeated string assistants = 26;//副的
+  repeated string children = 27; //小孩
   repeated string tags = 28;
   repeated string agents = 29; //帮扶志愿者
   repeated IdentifyInfo members = 30;
@@ -51,6 +52,7 @@ message ReqFamilyAdd {
   string cover = 8;
   string master = 9;
   repeated IdentifyInfo members = 10;
+  repeated string children = 11;
 }
 
 message ReqFamilyUpdate{
