@@ -30,6 +30,7 @@ message ApplyInfo {
   string group = 12; //
   string reason = 13;
   string remark = 14;
+  string target = 15;
   repeated string attachments = 24;
 }
 
@@ -41,7 +42,8 @@ message ReqApplyAdd {
   string inviter = 5;
   string operator = 6;
   string remark = 7;
-  repeated string attachments = 8;
+  string target = 8;
+  repeated string attachments = 20;
 }
 
 message ReplyApplyOne{
