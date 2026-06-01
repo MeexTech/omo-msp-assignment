@@ -33,9 +33,13 @@ message TeamInfo {
   uint32 status = 12;
   uint32 limit = 13;
   string parent = 14;
-  repeated string assistants = 15;//副的
-  repeated string tags = 16;
-  repeated string members = 17;
+  uint32 type = 15;
+  string link = 16;
+  string store = 17;
+  string entity = 18;
+  repeated string assistants = 30;//副的
+  repeated string tags = 31;
+  repeated string members = 32;
 }
 
 message ReqTeamAdd {
@@ -47,7 +51,11 @@ message ReqTeamAdd {
   string master = 6;
   string parent = 7;
   uint32 limit = 8;
-  repeated string tags = 9;
+  uint32 type = 9;
+  string store = 10;
+  string link = 11;
+  string entity = 12;
+  repeated string tags = 20;
 }
 
 message ReqTeamUpdate{
@@ -55,6 +63,8 @@ message ReqTeamUpdate{
   string name = 2;
   string remark = 3;
   string operator = 4;
+  string link = 5;
+  string store = 6;
 }
 
 message ReplyTeamInfo{
