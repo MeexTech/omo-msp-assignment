@@ -40,6 +40,7 @@ message TeamInfo {
   repeated string assistants = 30;//副的
   repeated string tags = 31;
   repeated string members = 32;
+  repeated string relates = 33;
 }
 
 message ReqTeamAdd {
